@@ -6,7 +6,6 @@
 class Player : public Entity {
 private:
     int left, right, up, down;
-    int idolLeft, idolRight, runLeft, runRight, jumpRight;
     SDL_Renderer *ren;
 public:
     Player(SDL_Renderer *r);

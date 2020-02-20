@@ -23,5 +23,30 @@ void Entity::updateAnimation() {
     begin++;
     if(animations[curAnimation].tick >= animations[curAnimation].amount) {
         animations[curAnimation].tick=0;
+        if(newAnimation >= 0) {
+            curAnimation = newAnimation;
+            newAnimation=-1;
+        }
     }
+}
+
+void Entity::updateJump() {
+    if(v_y <= 0 && jump==true) {
+        /** Direction du saut **/
+        if(getCurrentAnimation() == 0 || getCurrentAnimation() == 2 || getCurrentAnimation() == 4) {
+            setCurrentAnimation(jumpRight, idolRight);
+            evolutionJump(speed*2);
+        } else {
+            setCurrentAnimation(jumpLeft, idolLeft);
+            evolutionJump(-speed*2);
+        }
+    } else {
+        jump=false;
+        v_y=-48;
+    }
+}
+
+void Entity::evolutionJump(int v_x) {
+    setDest(getDX()+v_x, getDY()+v_y);
+    v_y += v_grav;
 }

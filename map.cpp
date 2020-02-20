@@ -54,18 +54,23 @@ void Map::updateCollision(Entity *a) {
             if(map[i].isSolid()) {
                     a->setFall(0);
                     a->setLockJump(0);
-                if((a->getDY()+a->getDH()) >= (map[i].getDY()+GRAVITY)) {
+                /* Si collision ≠ sur le dessus du bloc */
+                if((a->getDY()+a->getDH()) >= (map[i].getDY()+a->getVGrav())) {
                     a->setFall(1);
                     a->setLockJump(1);
+                    /* Si collision sur les côtés du bloc */
                     if(a->getDX() < (map[i].getDX()+map[i].getDW())) {
-                        if(a->getCurrentAnimation() == 3 || a->getCurrentAnimation() == 1) {
-                            a->setDest(a->getDX()+SPEED, a->getDY());
+                        /* Si collision sur la droite du bloc */
+                        if(a->getCurrentAnimation() == 1 || a->getCurrentAnimation() == 3) {
+                            a->setDest(a->getDX()+a->getSpeed(), a->getDY());
                         } 
-                        else if(a->getCurrentAnimation() == 2 || a->getCurrentAnimation() == 0) {
-                            a->setDest(a->getDX()-SPEED, a->getDY());
+                        /* Si collision sur la gauche du bloc */
+                        else if(a->getCurrentAnimation() == 0 || a->getCurrentAnimation() == 2) {
+                            a->setDest(a->getDX()-a->getSpeed(), a->getDY());
                         }
-                        else if(a->getCurrentAnimation() == 4) {
-                            a->setDest(a->getDX(), a->getDY()+SPEED-GRAVITY);
+                        /* Si collision en dessous du bloc */
+                        else if(a->getCurrentAnimation() == 4 || a->getCurrentAnimation() == 5) {
+                            a->setDest(a->getDX(), a->getDY()+a->getSpeed()-a->getVGrav());
                         }
                     }
                 }

@@ -72,6 +72,6 @@ void Game::update() {
     player->updateAnimation();
     map->updateCollision(player);
     if(player->isFall()) {
-        player->setDest(player->getDX(), player->getDY()+GRAVITY);
+        player->setDest(player->getDX(), player->getDY()+player->getVGrav());
     }
 }

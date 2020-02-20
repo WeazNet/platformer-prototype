@@ -5,12 +5,12 @@ Player::Player(SDL_Renderer *r) {
     left=right=up=0;
     setImage("res/player.png", ren);
     setDest(0, 0, 14*4, 21*4);
-    idolLeft = createCycle(2, 14, 21, 2, 20);
     idolRight = createCycle(1, 14, 21, 2, 20);
+    idolLeft = createCycle(2, 14, 21, 2, 20);
     runRight = createCycle(3, 14, 21, 4, 5);
     runLeft = createCycle(4, 14, 21, 4, 5);
-    jumpRight = createCycle(5, 14, 21, 4, 5);
-    
+    jumpRight = createCycle(5, 14, 21, 4, 10);
+    jumpLeft = createCycle(6, 14, 21, 4, 10);
     setCurrentAnimation(idolRight);
 }
 
@@ -36,7 +36,8 @@ void Player::input(SDL_Event &e) {
 }
 
 void Player::update() {
-    if(left) {if(getCurrentAnimation() != runRight){setCurrentAnimation(runLeft);} setDest(getDX()-SPEED, getDY());}
-    if(right) {if(getCurrentAnimation() != runLeft){setCurrentAnimation(runRight);} setDest(getDX()+SPEED, getDY());}
-    if(up && !lockJump) {setCurrentAnimation(jumpRight); /** TODO: Système de saut **/}
+    if(left) {if(getCurrentAnimation() != runRight){setCurrentAnimation(runLeft);} setDest(getDX()-speed, getDY());}
+    if(right) {if(getCurrentAnimation() != runLeft){setCurrentAnimation(runRight);} setDest(getDX()+speed, getDY());}
+    if(up && !lockJump) {jump=true;}
+    updateJump();
 }
