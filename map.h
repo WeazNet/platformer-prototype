@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <fstream>
+#include <map>
 #include <vector>
 #include <SDL2/SDL.h>
 
@@ -14,15 +15,16 @@
 class Map{
 private:
     int mapX, mapY;
+    std::string tileset;
     SDL_Renderer* ren;
-    vector<Object> map;
+    std::map<std::string, std::vector<Object>> map;
 public:
     Map(SDL_Renderer* r);
     ~Map();
-    void load(const char* filename, string tileset);
-    void draw();
+    void loadTileset(const std::string &t);
+    void load(const std::string &componentName, const char* filename, int size, bool isphysical);
+    void draw(const std::string &componentName);
     void updateCollision(Entity *a);
-    vector<Object> getMap() const {return map;}
 };
 
 #endif //MAP_H

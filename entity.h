@@ -19,7 +19,7 @@ protected:
         int speed;
         int tick;
     };
-    vector<cycle> animations;
+    std::vector<cycle> animations;
     int curAnimation, begin, newAnimation=-1;
     bool reverse;
 public:

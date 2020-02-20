@@ -26,7 +26,7 @@ void Object::setDest(int x, int y) {
     dest.y=y;
 }
 
-void Object::setImage(string filename, SDL_Renderer* ren) {
+void Object::setImage(std::string filename, SDL_Renderer* ren) {
     tex = IMG_LoadTexture(ren, filename.c_str());
 }
 

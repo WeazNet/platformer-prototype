@@ -6,13 +6,17 @@ Map::Map(SDL_Renderer* r) {
 Map::~Map(){
 }
 
-void Map::load(const char* filename, string tileset) {
+void Map::loadTileset(const std::string &t) {
+    tileset=t;
+}
+
+void Map::load(const std::string &componentName, const char* filename, int size, bool isphysical) {
     Object tmp;
     tmp.setImage(tileset, ren);
     int current, mx, my, mw, mh;
-    fstream in(filename);
+    std::fstream in(filename);
     if(!in.is_open()) {
-        cout << "Impossible de charger l'image: " << filename << endl;
+        std::cout << "Impossible de charger l'image: " << filename << std::endl;
         return;
     }
     in >> mx;
@@ -23,43 +27,49 @@ void Map::load(const char* filename, string tileset) {
     for(int i=0;i<(int)mh;i++) {
         for(int j=0;j<(int)mw;j++) {
             if(in.eof()) {
-                cout << "Chargement de la carte impossible" << endl;
+                std::cout << "Chargement de la carte impossible" << std::endl;
                 return;
             }
             in >> current;
             if((int)current != 0) {
-                tmp.setSrc((current-1)*TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
-                tmp.setDest((j*TILE_SIZE)+mx, (i*TILE_SIZE)+my, TILE_SIZE, TILE_SIZE);
-                tmp.setSolid(1);
-                if(current == 4 || current == 3) {tmp.setSolid(0);}
+                if(isphysical) {
+                    tmp.setSolid(1);
+                    if(current == 4 || current == 3) {tmp.setSolid(0);}
+                } else {
+                    tmp.setSolid(0);
+                    current=4;
+                    /** Temporary => TODO : tileset for no physical **/
+                }
                 tmp.setID(current);
-                map.push_back(tmp);
+                tmp.setSrc((current-1)*TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
+                tmp.setDest((j*size)+mx, (i*size)+my, size, size);
+                map[componentName].push_back(tmp);
             }
         }
     }
     in.close();
 }
 
-void Map::draw() {
+void Map::draw(const std::string &componentName) {
     Draw tmp(ren);
-    for(int i=0; i<(int)map.size();i++){
-        tmp.init(map[i]);
+    for(int i=0; i<(int)map[componentName].size();i++){
+        tmp.init(map[componentName][i]);
     }
 }
 void Map::updateCollision(Entity *a) {
     a->setFall(1);
     a->setLockJump(1);
-    for(int i=0;i<(int)map.size();i++) {
-        if(Object::collision(a, map[i])) {
-            if(map[i].isSolid()) {
+    for(int i=0;i<(int)map["map"].size();i++) {
+        if(Object::collision(a, map["map"][i])) {
+            if(map["map"][i].isSolid()) {
                     a->setFall(0);
                     a->setLockJump(0);
                 /* Si collision ≠ sur le dessus du bloc */
-                if((a->getDY()+a->getDH()) >= (map[i].getDY()+a->getVGrav())) {
+                if((a->getDY()+a->getDH()) >= (map["map"][i].getDY()+a->getVGrav())) {
                     a->setFall(1);
                     a->setLockJump(1);
                     /* Si collision sur les côtés du bloc */
-                    if(a->getDX() < (map[i].getDX()+map[i].getDW())) {
+                    if(a->getDX() < (map["map"][i].getDX()+map["map"][i].getDW())) {
                         /* Si collision sur la droite du bloc */
                         if(a->getCurrentAnimation() == 1 || a->getCurrentAnimation() == 3) {
                             a->setDest(a->getDX()+a->getSpeed(), a->getDY());

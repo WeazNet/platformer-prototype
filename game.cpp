@@ -6,7 +6,9 @@ Game::Game() {
     running=true;
 
     map = new Map(ren);
-    map->load("levels/1.level", "res/tileset.png");
+    map->loadTileset("res/tileset.png");
+    map->load("map", "levels/1.level", TILE_SIZE, 1);
+    map->load("minimap", "levels/1.level", TILE_SIZE/4, 0);
 
     draw = new Draw(ren);
 
@@ -48,7 +50,8 @@ void Game::render() {
     SDL_RenderFillRect(ren, &rect);
 
     /*************/
-    map->draw();
+    map->draw("map");
+    map->draw("minimap");
     draw->init(*player);
     /*************/
     frameCount++;

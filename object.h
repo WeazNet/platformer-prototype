@@ -2,7 +2,6 @@
 #define OBJECT_H
 
 #include <iostream>
-using namespace std;
 #include <SDL2/SDL_image.h>
 
 class Object {
@@ -18,7 +17,7 @@ public:
     void setSrc(int x, int y, int w, int h);
     void setDest(int x, int y, int w, int h);
     void setDest(int x, int y);
-    void setImage(string filename, SDL_Renderer* ren);
+    void setImage(std::string filename, SDL_Renderer* ren);
     SDL_Rect getSrc() const {return src;}
     SDL_Rect getDest() const {return dest;}
     SDL_Texture* getTex() const {return tex;}
