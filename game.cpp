@@ -13,11 +13,15 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
     draw = new Draw(ren);
 
     player = new Player(ren);
+
+    debugger = new Debugger(ren);
+    debugger->activate(true);
     loop();
 }
 
 Game::~Game() {
-    draw=NULL;map=NULL;player=NULL;
+    debugger=NULL;draw=NULL;map=NULL;player=NULL;
+    delete debugger;
     delete draw;
     delete map;
     delete player;
@@ -52,6 +56,10 @@ void Game::render() {
     SDL_RenderFillRect(ren, &rect);
 
     /*************/
+    utils.addEntity(*player);
+    debugger->viewCollidersBox(true, utils);
+    utils.clearEntities();
+    
     map->draw("map");
     map->draw("minimap");
     draw->init(*player);
