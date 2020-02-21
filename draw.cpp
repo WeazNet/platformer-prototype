@@ -1,6 +1,6 @@
 #include "draw.h"
 
-Draw::Draw(SDL_Renderer* r) {
+Draw::Draw(SDL_Renderer* &r) {
     ren=r;
     font = TTF_OpenFont("res/font.ttf", 20);
 }
@@ -22,7 +22,7 @@ void Draw::init(const char* text, int x, int y, int r, int g, int b, int a) {
     SDL_FreeSurface(surf);
 }
 
-void Draw::init(Object o) {
+void Draw::init(Object &o) {
     SDL_Rect src = o.getSrc();
     SDL_Rect dest = o.getDest();
     SDL_RenderCopyEx(ren, o.getTex(), &src, &dest, 0, NULL, SDL_FLIP_NONE);

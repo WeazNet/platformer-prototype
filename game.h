@@ -2,8 +2,6 @@
 #define GAME_H
 
 #include <iostream>
-using namespace std;
-#include <SDL2/SDL.h>
 
 #include "draw.h"
 #include "map.h"
@@ -23,7 +21,7 @@ private:
     Draw *draw;
     Player *player;
 public:
-    Game();
+    Game(SDL_Window* &window, SDL_Renderer* &renderer);
     ~Game();
     void loop();
     void render();

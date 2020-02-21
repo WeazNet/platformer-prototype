@@ -17,7 +17,7 @@ public:
     void setSrc(int x, int y, int w, int h);
     void setDest(int x, int y, int w, int h);
     void setDest(int x, int y);
-    void setImage(std::string filename, SDL_Renderer* ren);
+    void setImage(const std::string filename, SDL_Renderer* &ren);
     SDL_Rect getSrc() const {return src;}
     SDL_Rect getDest() const {return dest;}
     SDL_Texture* getTex() const {return tex;}
@@ -29,7 +29,7 @@ public:
     void setSolid(bool s) {solid=s;}
     int getID() const {return ID;}
     void setID(int i) {ID=i;}
-    static bool collision(Object *a, Object b);
+    static bool collision(Object *a, Object *b);
 };
 
 #endif //OBJECT_H

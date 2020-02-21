@@ -1,8 +1,8 @@
 #include "game.h"
 
-Game::Game() {
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) cout << "Error: SDL_Init() " << SDL_GetError() << endl;
-    if(SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &w, &ren) < 0) cout << "Error: SDL_CreateWindowAndRenderer() " << SDL_GetError() << endl;
+Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
+    w=window;
+    ren=renderer;
     running=true;
 
     map = new Map(ren);
@@ -17,11 +17,13 @@ Game::Game() {
 }
 
 Game::~Game() {
+    draw=NULL;map=NULL;player=NULL;
     delete draw;
     delete map;
     delete player;
     IMG_Quit();
     SDL_DestroyWindow(w);
+    SDL_RenderClear(ren);
     SDL_DestroyRenderer(ren);
     SDL_Quit();
 }

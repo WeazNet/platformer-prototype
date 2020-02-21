@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(SDL_Renderer *r) {
+Player::Player(SDL_Renderer* &r) {
     ren=r;
     left=right=up=0;
     setImage("res/player.png", ren);

@@ -1,5 +1,5 @@
 #include "map.h"
-Map::Map(SDL_Renderer* r) {
+Map::Map(SDL_Renderer* &r) {
     ren=r;
     mapX=mapY=0;
 }
@@ -56,11 +56,11 @@ void Map::draw(const std::string &componentName) {
         tmp.init(map[componentName][i]);
     }
 }
-void Map::updateCollision(Entity *a) {
+void Map::updateCollision(Entity* a) {
     a->setFall(1);
     a->setLockJump(1);
     for(int i=0;i<(int)map["map"].size();i++) {
-        if(Object::collision(a, map["map"][i])) {
+        if(Object::collision(a, &map["map"][i])) {
             if(map["map"][i].isSolid()) {
                     a->setFall(0);
                     a->setLockJump(0);

@@ -19,7 +19,7 @@ private:
     SDL_Renderer* ren;
     std::map<std::string, std::vector<Object>> map;
 public:
-    Map(SDL_Renderer* r);
+    Map(SDL_Renderer* &r);
     ~Map();
     void loadTileset(const std::string &t);
     void load(const std::string &componentName, const char* filename, int size, bool isphysical);

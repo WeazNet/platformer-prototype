@@ -8,7 +8,7 @@ private:
     int left, right, up, down;
     SDL_Renderer *ren;
 public:
-    Player(SDL_Renderer *r);
+    Player(SDL_Renderer* &r);
     void input(SDL_Event &e);
     void update();
 };
