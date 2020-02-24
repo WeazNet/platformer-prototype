@@ -4,24 +4,29 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
     w=window;
     ren=renderer;
     running=true;
+    
+    rect.x=rect.y=0;
+    rect.w=WIDTH;
+    rect.h=HEIGHT;
 
-    map = new Map(ren);
+    debug = new Debug(ren);
+    debug->activate(true);
+    debugInterface = new DebugInterface(ren, debug);
+
+    map = new Map(ren, debug);
     map->loadTileset("res/tileset.png");
     map->load("map", "levels/1.level", TILE_SIZE, 1);
-    map->load("minimap", "levels/1.level", TILE_SIZE/4, 0);
-
-    draw = new Draw(ren);
 
     player = new Player(ren);
 
-    debugger = new Debugger(ren);
-    debugger->activate(true);
+    draw = new Draw(ren, debug);
     loop();
 }
 
 Game::~Game() {
-    debugger=NULL;draw=NULL;map=NULL;player=NULL;
-    delete debugger;
+    debug=NULL;debugInterface=NULL;draw=NULL;map=NULL;player=NULL;
+    delete debug;
+    delete debugInterface;
     delete draw;
     delete map;
     delete player;
@@ -33,42 +38,35 @@ Game::~Game() {
 }
 
 void Game::loop() {
-    int static lastTime = 0;
+    Uint32 frameStart;
+    float static frameTime = 0;
     while(running) {
-        lastFrame = SDL_GetTicks();
-        if(lastTime >= (lastTime+1000)) {
-            lastTime=lastFrame;
-            frameCount=0;
+        frameStart = SDL_GetTicks();
+        if(frameStart >= (frameTime+1000)) {
+            frameTime=frameStart;
+            debug->clearFrameCount();
         }
-
         input();
         update();
         render();
+        frameTime = SDL_GetTicks() - frameStart;
+        if((1000/60) > frameTime) {
+            SDL_Delay((1000/60)-frameTime);
+        }
     }
 }
 
 void Game::render() {
     SDL_SetRenderDrawColor(ren, 140, 140, 140, 255);
-    SDL_Rect rect;
-    rect.x=rect.y=0;
-    rect.w=WIDTH;
-    rect.h=HEIGHT;
     SDL_RenderFillRect(ren, &rect);
 
-    /*************/
-    utils.addEntity(*player);
-    debugger->viewCollidersBox(true, utils);
-    utils.clearEntities();
-    
     map->draw("map");
-    map->draw("minimap");
     draw->init(*player);
-    /*************/
-    frameCount++;
-    FPS = SDL_GetTicks() - lastFrame;
-    if(FPS < (1000/60)) {
-        SDL_Delay((1000/60)-FPS);
-    }
+    utils.addObject(*player);
+    debug->showCollidersBox(true, utils);
+    utils.clearObjects();
+    debugInterface->render(draw);
+
     SDL_RenderPresent(ren);
 }
 
@@ -83,7 +81,7 @@ void Game::input() {
 void Game::update() {
     player->update();
     player->updateAnimation();
-    map->updateCollision(player);
+    map->updateCollision(player, utils);
     if(player->isFall()) {
         player->setDest(player->getDX(), player->getDY()+player->getVGrav());
     }

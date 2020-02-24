@@ -1,4 +1,3 @@
-using namespace std;
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include "game.h"

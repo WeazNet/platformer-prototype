@@ -1,19 +1,19 @@
 #include "utils.h"
-std::vector<SDL_Rect> Utils::getListEntitiesDest() {
-    std::vector<SDL_Rect> entitiesDest;
-    for(int i=0; i<(int)listEntities.size(); i++) {
+std::vector<SDL_Rect> Utils::getListObjectsDest() {
+    std::vector<SDL_Rect> objectsDest;
+    for(int i=0; i<(int)listObjects.size(); i++) {
         SDL_Rect rect;
-        rect.x=listEntities[i].getDX();
-        rect.y=listEntities[i].getDY();
-        rect.w=listEntities[i].getDW();
-        rect.h=listEntities[i].getDH();
-        entitiesDest.push_back(rect);
+        rect.x=listObjects[i].getDX();
+        rect.y=listObjects[i].getDY();
+        rect.w=listObjects[i].getDW();
+        rect.h=listObjects[i].getDH();
+        objectsDest.push_back(rect);
     }
-    return entitiesDest;
+    return objectsDest;
 }
-void Utils::addEntity(Entity &e) {
-    listEntities.push_back(e);
+void Utils::addObject(Object &o) {
+    listObjects.push_back(o);
 }
-void Utils::clearEntities() {
-    listEntities.clear();
+void Utils::clearObjects() {
+    listObjects.clear();
 }

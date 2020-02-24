@@ -1,4 +1,4 @@
-OBJS = *.cpp
+OBJS = *.cpp debug/*.cpp
 COMPILER = g++
 COMPILER_FLAGS = -Wall -g
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf

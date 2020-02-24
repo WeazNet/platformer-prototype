@@ -4,14 +4,14 @@
 #include <vector>
 #include <SDL2/SDL.h>
 
-#include "entity.h"
+#include "object.h"
 
 class Utils {
 protected:
-    std::vector<Entity> listEntities;
+    std::vector<Object> listObjects;
 public:
-    void addEntity(Entity &e);
-    void clearEntities();
-    std::vector<SDL_Rect>getListEntitiesDest();
+    void addObject(Object &o);
+    void clearObjects();
+    std::vector<SDL_Rect>getListObjectsDest();
 };
 #endif//UTILS_H

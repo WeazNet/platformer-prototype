@@ -1,5 +1,6 @@
 #include "map.h"
-Map::Map(SDL_Renderer* &r) {
+Map::Map(SDL_Renderer* &r, Debug* &d) {
+    debug=d;
     ren=r;
     mapX=mapY=0;
 }
@@ -51,17 +52,18 @@ void Map::load(const std::string &componentName, const char* filename, int size,
 }
 
 void Map::draw(const std::string &componentName) {
-    Draw tmp(ren);
+    Draw tmp(ren, debug);
     for(int i=0; i<(int)map[componentName].size();i++){
         tmp.init(map[componentName][i]);
     }
 }
-void Map::updateCollision(Entity* a) {
+void Map::updateCollision(Entity* a, Utils &u) {
     a->setFall(1);
     a->setLockJump(1);
     for(int i=0;i<(int)map["map"].size();i++) {
         if(Object::collision(a, &map["map"][i])) {
             if(map["map"][i].isSolid()) {
+                    u.addObject(map["map"][i]);
                     a->setFall(0);
                     a->setLockJump(0);
                 /* Si collision ≠ sur le dessus du bloc */

@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "font.h"
 #include "draw.h"
 #include "map.h"
 #include "player.h"
-#include "debugger.h"
+#include "debug/debug.h"
+#include "debug/debugInterface.h"
 #include "utils.h"
 
 #define WIDTH 1280
@@ -16,14 +18,16 @@ class Game {
 private:
     SDL_Window *w;
     SDL_Renderer *ren;
+    SDL_Rect rect;
     bool running;
-    int lastFrame, frameCount, FPS;
     int mouseX, mouseY;
+    Font font;
+    Utils utils;
+    Debug *debug;
+    DebugInterface *debugInterface;
     Map *map;
     Draw *draw;
     Player *player;
-    Debugger *debugger;
-    Utils utils;
 public:
     Game(SDL_Window* &window, SDL_Renderer* &renderer);
     ~Game();
