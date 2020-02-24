@@ -61,7 +61,7 @@ void Game::render() {
     SDL_RenderFillRect(ren, &rect);
 
     map->draw("map");
-    draw->init(*player);
+    draw->initObject(*player);
     utils.addObject(*player);
     debug->showCollidersBox(true, utils);
     utils.clearObjects();

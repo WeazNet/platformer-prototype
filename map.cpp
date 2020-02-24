@@ -54,7 +54,7 @@ void Map::load(const std::string &componentName, const char* filename, int size,
 void Map::draw(const std::string &componentName) {
     Draw tmp(ren, debug);
     for(int i=0; i<(int)map[componentName].size();i++){
-        tmp.init(map[componentName][i]);
+        tmp.initObject(map[componentName][i]);
     }
 }
 void Map::updateCollision(Entity* a, Utils &u) {

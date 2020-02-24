@@ -18,8 +18,9 @@ private:
 public:
     Draw(SDL_Renderer* &r,Debug* &d);
     ~Draw();
-    tuple<int, int> init(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int>origin);
-    void init(Object &o, Object &parentClass, int spacing);
-    void init(Object &o);
+    tuple<int, int, int> initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin, Object &parentClass, int spacing = 0);
+    tuple<int, int, int> initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin);
+    void initObject(Object &o, Object const &parentClass, int spacing = 0);
+    void initObject(Object &o);
 };
 #endif//DRAW_H

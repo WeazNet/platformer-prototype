@@ -7,9 +7,9 @@ Draw::Draw(SDL_Renderer* &r, Debug* &d) {
 Draw::~Draw() {
 }
 
-tuple<int, int> Draw::init(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int>origin) {
-    int originX, originY;
-    tie(originX, originY) = origin;
+tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin) {
+    int originX, originY, rectW;
+    tie(originX, originY, rectW) = origin;
     SDL_Color color;
     color.r=r; color.g=g; color.b=b; color.a=a;
     SDL_Surface* surf;
@@ -24,17 +24,24 @@ tuple<int, int> Draw::init(const char* text, int x, int y, int r, int g, int b, 
     SDL_DestroyTexture(tex);
     tex=NULL;
     debug->frameIncrement();
-    return {rect.x, rect.y+rect.h};
+    return {rect.x, rect.y+rect.h, rect.w};
 }
 
-void Draw::init(Object &o, Object &parentClass, int spacing) {
-    o.setDest(parentClass.getDX()+parentClass.getDW()+o.getDX()+spacing, parentClass.getDY()+parentClass.getDH()+o.getDY()+spacing, o.getDW(), o.getDH());
-    init(o);
+tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin, Object &parentClass, int spacing) {
+    int posX, posY, w;
+    tie(posX,posY,w) = initText(text, x, y, r, g, b, a, font, origin);
+    parentClass.setDest(parentClass.getDX(), parentClass.getDY(),  posX+w+spacing, posY+spacing);
+    return tuple<int, int, int>(posX,posY,w);
 }
 
-void Draw::init(Object &o) {
+void Draw::initObject(Object &o) {
     SDL_Rect src = o.getSrc();
     SDL_Rect dest = o.getDest();
     SDL_RenderCopyEx(ren, o.getTex(), &src, &dest, 0, NULL, SDL_FLIP_NONE);
     debug->frameIncrement();
+}
+
+void Draw::initObject(Object &o, Object const &parentClass, int spacing) {
+    o.setDest(parentClass.getDX()+parentClass.getDW()+o.getDX()+spacing, parentClass.getDY()+parentClass.getDH()+o.getDY()+spacing, o.getDW(), o.getDH());
+    initObject(o);
 }
