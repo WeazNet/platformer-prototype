@@ -5,12 +5,20 @@
 
 #include "object.h"
 
+enum {
+    IDOL_RIGHT,
+    IDOL_LEFT,
+    RUN_RIGHT,
+    RUN_LEFT,
+    JUMP_RIGHT,
+    JUMP_LEFT
+};
+
 class Entity : public Object {
 protected:
     bool fall, lockJump, jump;
     int v_y=-48, v_grav=6;
     int health, maxHealth, speed=6;
-    int idolRight, idolLeft, runLeft, runRight, jumpRight, jumpLeft;
     struct cycle {
         int row;
         int w;
@@ -33,7 +41,7 @@ public:
     int getSpeed() const {return speed;}
     bool isFall() const {return fall;}
     bool isReverse() const {return reverse;}
-    int createCycle(int row, int w, int h, int amount, int speed);
+    void createCycle(int row, int w, int h, int amount, int speed);
     void updateAnimation();
     void setFall(bool f) {fall=f;}
     void setLockJump(bool l) {lockJump=l;}

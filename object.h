@@ -30,7 +30,6 @@ public:
     void setSolid(bool s) {solid=s;}
     int getID() const {return ID;}
     void setID(int i) {ID=i;}
-    static bool collision(Object *a, Object *b);
 };
 
 #endif //OBJECT_H

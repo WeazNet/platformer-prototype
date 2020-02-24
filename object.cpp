@@ -29,11 +29,3 @@ void Object::setDest(int x, int y) {
 void Object::setImage(const std::string filename, SDL_Renderer* &ren) {
     tex = IMG_LoadTexture(ren, filename.c_str());
 }
-
-bool Object::collision(Object *a, Object *b) {
-    if(a->getDX() < (b->getDX()+b->getDW()) && (a->getDX()+a->getDW()) > b->getDX()
-    && a->getDY() < (b->getDY()+b->getDH()) && (a->getDY()+a->getDH()) > b->getDY()) {
-        return true;
-    }
-    return false;
-}

@@ -4,14 +4,13 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 using namespace std;
-
-#include "../utils.h"
+#include "../collisions.h"
 #include "../entity.h"
 
 class Debug {
 private:
     SDL_Renderer* ren;
-    vector<SDL_Rect> objects;
+    vector<SDL_Rect> colliders;
     bool activated;
     int frameCount;
 public:
@@ -19,10 +18,13 @@ public:
     ~Debug();
     bool isActivated() const {return activated;}
     void activate(bool a) {activated=a;}
-    void showCollidersBox(bool active, Utils &u);
+
+    void addColliders(Collisions &c);
     void frameIncrement() {frameCount++;}
     void clearFrameCount() {frameCount=0;}
-    string CollisionNumber() const {return to_string(objects.size());}
+    
+    void showCollidersBox();
+    string CollisionNumber() const {return to_string(colliders.size());}
     string frameNumber() const {return to_string(frameCount);}
 };
 #endif//DEBUG_H

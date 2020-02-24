@@ -14,8 +14,7 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
     debugInterface = new DebugInterface(ren, debug);
 
     map = new Map(ren, debug);
-    map->loadTileset("res/tileset.png");
-    map->load("map", "levels/1.level", TILE_SIZE, 1);
+    map->load("res/tileset.png", "world.map", TILE_SIZE);
 
     player = new Player(ren);
 
@@ -60,11 +59,12 @@ void Game::render() {
     SDL_SetRenderDrawColor(ren, 140, 140, 140, 255);
     SDL_RenderFillRect(ren, &rect);
 
-    map->draw("map");
+    map->draw();
     draw->initObject(*player);
-    utils.addObject(*player);
-    debug->showCollidersBox(true, utils);
-    utils.clearObjects();
+    collisions.addCollider(*player);
+    debug->addColliders(collisions);
+    debug->showCollidersBox();
+    collisions.clearColliders();
     debugInterface->render(draw);
 
     SDL_RenderPresent(ren);
@@ -81,7 +81,7 @@ void Game::input() {
 void Game::update() {
     player->update();
     player->updateAnimation();
-    map->updateCollision(player, utils);
+    collisions.update(*player, map->getMap());
     if(player->isFall()) {
         player->setDest(player->getDX(), player->getDY()+player->getVGrav());
     }

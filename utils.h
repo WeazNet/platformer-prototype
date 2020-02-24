@@ -8,10 +8,6 @@
 
 class Utils {
 protected:
-    std::vector<Object> listObjects;
 public:
-    void addObject(Object &o);
-    void clearObjects();
-    std::vector<SDL_Rect>getListObjectsDest();
 };
 #endif//UTILS_H

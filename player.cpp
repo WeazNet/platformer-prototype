@@ -5,29 +5,30 @@ Player::Player(SDL_Renderer* &r) {
     left=right=up=0;
     setImage("res/player.png", ren);
     setDest(0, 0, 14*4, 21*4);
-    idolRight = createCycle(1, 14, 21, 2, 20);
-    idolLeft = createCycle(2, 14, 21, 2, 20);
-    runRight = createCycle(3, 14, 21, 4, 5);
-    runLeft = createCycle(4, 14, 21, 4, 5);
-    jumpRight = createCycle(5, 14, 21, 4, 10);
-    jumpLeft = createCycle(6, 14, 21, 4, 10);
-    setCurrentAnimation(idolRight);
+    setSolid(1);
+    createCycle(IDOL_RIGHT, 14, 21, 2, 20);
+    createCycle(IDOL_LEFT, 14, 21, 2, 20);
+    createCycle(RUN_RIGHT, 14, 21, 4, 5);
+    createCycle(RUN_LEFT, 14, 21, 4, 5);
+    createCycle(JUMP_RIGHT, 14, 21, 4, 10);
+    createCycle(JUMP_LEFT, 14, 21, 4, 10);
+    setCurrentAnimation(IDOL_RIGHT);
 }
 
 void Player::input(SDL_Event &e) {
     if(e.type == SDL_KEYDOWN) {
-        if(e.key.keysym.sym == SDLK_d) {right=1;left=0;}
-        if(e.key.keysym.sym == SDLK_q) {left=1;right=0;}
-        if(e.key.keysym.sym == SDLK_z) {up=1;down=0;}
+        if(e.key.keysym.sym == SDLK_d) {right=1;}
+        if(e.key.keysym.sym == SDLK_q) {left=1;}
+        if(e.key.keysym.sym == SDLK_z) {up=1;}
     }
     if(e.type == SDL_KEYUP) {
         if(e.key.keysym.sym == SDLK_d) {
             right=0;
-            setCurrentAnimation(idolRight);
+            setCurrentAnimation(IDOL_RIGHT);
         }
         if(e.key.keysym.sym == SDLK_q) {
             left=0;
-            setCurrentAnimation(idolLeft);
+            setCurrentAnimation(IDOL_LEFT);
         }
         if(e.key.keysym.sym == SDLK_z) {
             up=0;
@@ -36,8 +37,8 @@ void Player::input(SDL_Event &e) {
 }
 
 void Player::update() {
-    if(left) {if(getCurrentAnimation() != runRight){setCurrentAnimation(runLeft);} setDest(getDX()-speed, getDY());}
-    if(right) {if(getCurrentAnimation() != runLeft){setCurrentAnimation(runRight);} setDest(getDX()+speed, getDY());}
+    if(left) {if(getCurrentAnimation() != RUN_RIGHT){setCurrentAnimation(RUN_LEFT);} setDest(getDX()-speed, getDY());}
+    if(right) {if(getCurrentAnimation() != RUN_LEFT){setCurrentAnimation(RUN_RIGHT);} setDest(getDX()+speed, getDY());}
     if(up && !lockJump) {jump=true;}
     updateJump();
 }

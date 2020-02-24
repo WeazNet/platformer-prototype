@@ -1,15 +1,14 @@
 #include "entity.h"
 
-int Entity::createCycle(int row, int w, int h, int amount, int speed) {
+void Entity::createCycle(int row, int w, int h, int amount, int speed) {
     cycle tmp;
-    tmp.row = row-1;
+    tmp.row = row;
     tmp.w = w;
     tmp.h = h;
     tmp.amount = amount;
     tmp.speed = speed;
     tmp.tick = 0;
     animations.push_back(tmp);
-    return animations.size()-1;
 }
 
 void Entity::updateAnimation() {
@@ -33,11 +32,11 @@ void Entity::updateAnimation() {
 void Entity::updateJump() {
     if(v_y <= 0 && jump==true) {
         /** Direction du saut **/
-        if(getCurrentAnimation() == 0 || getCurrentAnimation() == 2 || getCurrentAnimation() == 4) {
-            setCurrentAnimation(jumpRight, idolRight);
+        if(getCurrentAnimation() == IDOL_RIGHT || getCurrentAnimation() == RUN_RIGHT || getCurrentAnimation() == JUMP_RIGHT) {
+            setCurrentAnimation(JUMP_RIGHT, IDOL_RIGHT);
             evolutionJump(speed*2);
         } else {
-            setCurrentAnimation(jumpLeft, idolLeft);
+            setCurrentAnimation(JUMP_LEFT, IDOL_LEFT);
             evolutionJump(-speed*2);
         }
     } else {
@@ -49,4 +48,5 @@ void Entity::updateJump() {
 void Entity::evolutionJump(int v_x) {
     setDest(getDX()+v_x, getDY()+v_y);
     v_y += v_grav;
+    SDL_Delay(20);
 }
