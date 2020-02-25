@@ -23,7 +23,6 @@ private:
     int mouseX, mouseY;
     Collisions collisions;
     Font font;
-    Utils utils;
     Debug *debug;
     DebugInterface *debugInterface;
     Map *map;

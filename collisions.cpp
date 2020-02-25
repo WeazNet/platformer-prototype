@@ -1,6 +1,6 @@
 #include "collisions.h"
 
-bool Collisions::checkPosition(Object &a, Object &b) {
+bool Collisions::isCollision(Object &a, Object &b) {
     if(a.getDX() < (b.getDX()+b.getDW()) && (a.getDX()+a.getDW()) > b.getDX()
     && a.getDY() < (b.getDY()+b.getDH()) && (a.getDY()+a.getDH()) > b.getDY()) {
         return true;
@@ -9,7 +9,7 @@ bool Collisions::checkPosition(Object &a, Object &b) {
 }
 
 bool Collisions::collision(Object &a, Object &b) {
-    if(checkPosition(a, b)) {
+    if(isCollision(a, b)) {
         if(a.isSolid() && b.isSolid()) {
             return true;
         }
