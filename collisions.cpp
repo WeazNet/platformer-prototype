@@ -27,7 +27,7 @@ void Collisions::update(Entity &a, vector<Object> b) {
             a.setFall(0);
             a.setLockJump(0);
             /* Si collision ≠ sur le dessus du bloc */
-            if((a.getDY()+a.getDH()-a.getSpeed()) >= (b[i].getDY()+a.getVGrav())) {
+            if((a.getDY()+a.getDH()-a.getSpeed()-1) >= (b[i].getDY()+a.getVGrav())) {
                 a.setFall(1);
                 a.setLockJump(1);
                 /* Si collision sur le dessous du bloc */

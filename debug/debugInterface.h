@@ -7,16 +7,14 @@ using namespace std;
 #include "../draw.h"
 #include "../font.h"
 #include "debug.h"
-class DebugInterface : public Object {
+class DebugInterface : public Object, public Debug {
 private:
-    Debug *debug;
     SDL_Renderer *ren;
     Font font;
-    int FPS;
-    float time;
 public:
-    DebugInterface(SDL_Renderer* &r, Debug* &d);
+    DebugInterface(SDL_Renderer* &r);
     ~DebugInterface();
     void render(Draw* &draw);
+    void showCollidersBox();
 };
 #endif//DEBUG_INTERFACE_H

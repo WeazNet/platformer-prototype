@@ -4,14 +4,19 @@
 #include <iostream>
 #include <vector>
 #include <SDL2/SDL_image.h>
+#include "define.h"
+
+enum Solid {
+    AIR,
+    BLOCK
+};
 
 class Object {
-private:
+protected:
     SDL_Rect src;
     SDL_Rect dest;
     SDL_Texture* tex;
     bool solid;
-    int ID;
 public:
     Object();
     ~Object();
@@ -28,8 +33,6 @@ public:
     int getDH() const {return dest.h;}
     bool isSolid() const {return solid;}
     void setSolid(bool s) {solid=s;}
-    int getID() const {return ID;}
-    void setID(int i) {ID=i;}
 };
 
 #endif //OBJECT_H

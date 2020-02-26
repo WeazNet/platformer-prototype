@@ -10,9 +10,8 @@
 #include "collisions.h"
 #include "debug/debug.h"
 #include "debug/debugInterface.h"
-
-#define WIDTH 1280
-#define HEIGHT 720
+#include "generate.h"
+#include "define.h"
 
 class Game {
 private:
@@ -23,7 +22,6 @@ private:
     int mouseX, mouseY;
     Collisions collisions;
     Font font;
-    Debug *debug;
     DebugInterface *debugInterface;
     Map *map;
     Draw *draw;

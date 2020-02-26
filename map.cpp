@@ -1,14 +1,12 @@
 #include "map.h"
-Map::Map(SDL_Renderer* &r, Debug* &d) {
-    debug=d;
+Map::Map(SDL_Renderer* &r) {
     ren=r;
-    mapX=mapY=0;
 }
 Map::~Map(){
 }
 
 void Map::load(string tileset,const char* filename, int size) {
-    Object tmp;
+    Tile tmp;
     tmp.setImage(tileset, ren);
     int current, mx, my, mw, mh;
     std::fstream in(filename);
@@ -29,12 +27,7 @@ void Map::load(string tileset,const char* filename, int size) {
             }
             in >> current;
             if((int)current != 0) {
-                if(current == 4 || current == 3) {
-                tmp.setSolid(0);
-                } else {
-                tmp.setSolid(1);
-                }
-                tmp.setID(current);
+                tmp.setType(current);
                 tmp.setSrc((current-1)*TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
                 tmp.setDest((j*size)+mx, (i*size)+my, size, size);
                 map.push_back(tmp);
@@ -45,8 +38,16 @@ void Map::load(string tileset,const char* filename, int size) {
 }
 
 void Map::draw() {
-    Draw tmp(ren, debug);
+    Draw tmp(ren);
     for(int i=0; i<(int)map.size();i++){
-        tmp.initObject(map[i]);
+        if(map[i].getDX() < WIDTH+TILE_SIZE && map[i].getDX() > 0-TILE_SIZE && map[i].getDY() < HEIGHT+TILE_SIZE && map[i].getDY() > 0-TILE_SIZE) {
+            tmp.initObject(map[i]);
+        }
+    }
+}
+
+void Map::scroll(int x, int y) {
+    for(int i=0; i<(int)map.size(); i++) {
+        map[i].setDest(map[i].getDX()+x, map[i].getDY()+y);
     }
 }
