@@ -16,8 +16,11 @@ void DebugInterface::render(Draw* &draw) {
     tuple<int, int, int> currentOrigin = {0, 0, 0};
     draw->initObject(*this);
     currentOrigin = draw->initText("Debug Interface", 10, 10, 0, 0, 255, 255, font.getBold(), currentOrigin, *this, 20);
+    currentOrigin = draw->initText(("FPS: " + to_string(Debug::fps)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
     currentOrigin = draw->initText(("Frame number charged: " + to_string(Debug::frameCount)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
     currentOrigin = draw->initText(("Collision number: " + to_string(Debug::colliders.size())).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
+    currentOrigin = draw->initText(("Mouse pos x: " + to_string(Debug::mouseX)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
+    currentOrigin = draw->initText(("Mouse pos y: " + to_string(Debug::mouseY)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
 }
 
 void DebugInterface::showCollidersBox() {

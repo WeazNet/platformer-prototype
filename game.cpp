@@ -13,7 +13,7 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
 
     Generate gen(ren);
 
-    Debug::activate(false);
+    Debug::activate(true);
     debugInterface = new DebugInterface(ren);
 
     map = new Map(ren);
@@ -25,11 +25,11 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
 }
 
 Game::~Game() {
-    debugInterface=NULL;draw=NULL;map=NULL;player=NULL;
-    delete draw;
-    delete map;
-    delete player;
-    delete debugInterface;
+    deleteAll(draw);
+    deleteAll(debugInterface);
+    deleteAll(map);
+    deleteAll(player);
+    
     IMG_Quit();
     SDL_DestroyWindow(w);
     SDL_RenderClear(ren);
@@ -44,7 +44,7 @@ void Game::loop() {
         frameStart = SDL_GetTicks();
         if(frameStart >= (frameTime+1000)) {
             frameTime=frameStart;
-            if(Debug::isActive()) Debug::clearFrameCount();
+            Debug::clearFrameCount();
         }
         input();
         update();
@@ -53,6 +53,7 @@ void Game::loop() {
         if((1000/60) > frameTime) {
             SDL_Delay((1000/60)-frameTime);
         }
+        Debug::hydrateFPS(1000/frameTime);
     }
 }
 
@@ -80,6 +81,7 @@ void Game::input() {
 
 void Game::update() {
     player->update();
+    player->updateMouse(map->getMap());
     /** Camera update **/
     /* TODO: Camera Class */
     if(player->getDX() < 200) {player->setDest(200, player->getDY()); map->scroll(player->getSpeed(), 0);}

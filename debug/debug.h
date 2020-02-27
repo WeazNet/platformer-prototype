@@ -5,14 +5,15 @@
 #include <iostream>
 using namespace std;
 #include "../collisions.h"
-#include "../entity.h"
-#include "../draw.h"
 
 class Debug {
 protected:
     static vector<SDL_Rect> colliders;
     static bool activated;
     static int frameCount;
+    static int mouseX;
+    static int mouseY;
+    static int fps;
 public:
     Debug();
     ~Debug();
@@ -21,5 +22,7 @@ public:
     static void addColliders(Collisions &c);
     static void frameIncrement() {if(activated) frameCount++;}
     static void clearFrameCount() {frameCount=0;}
+    static void hydratePosMouse(int x, int y) {mouseX=x;mouseY=y;}
+    static void hydrateFPS(int f) {fps=f;}
 };
 #endif//DEBUG_H

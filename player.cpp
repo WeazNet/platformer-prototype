@@ -15,6 +15,10 @@ Player::Player(SDL_Renderer* &r) {
     setCurrentAnimation(IDOL_RIGHT);
 }
 
+Player::~Player() {
+    
+}
+
 void Player::input(SDL_Event &e) {
     if(e.type == SDL_KEYDOWN) {
         if(e.key.keysym.sym == SDLK_d) {right=1;}
@@ -33,6 +37,14 @@ void Player::input(SDL_Event &e) {
         if(e.key.keysym.sym == SDLK_z) {
             up=0;
         }
+    }
+}
+
+void Player::updateMouse(vector<Object> map) {
+    SDL_GetMouseState(&mouseX, &mouseY);
+    Debug::hydratePosMouse(mouseX, mouseY);
+    for(int i=0; i<(int)map.size();i++) {
+        /**TODO:Calcul mouse & tile position**/
     }
 }
 

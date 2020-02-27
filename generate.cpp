@@ -17,8 +17,7 @@ Generate::Generate(SDL_Renderer* &r) {
 }
 
 Generate::~Generate() {
-    delete draw;
-    draw=NULL;
+    deleteAll(draw);
 }
 
 string Generate::GenerationTmp(string filename) {
