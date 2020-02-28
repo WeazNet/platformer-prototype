@@ -15,16 +15,16 @@ Font::~Font() {
 }
 
 TTF_Font* Font::getRegular() {
-    if(regular == NULL) cout << TTF_GetError() << endl;
+    if(regular == NULL) std::cout << TTF_GetError() << std::endl;
     return regular;
 }
 
 TTF_Font* Font::getItalic() {
-    if(italic == NULL) cout << TTF_GetError() << endl;
+    if(italic == NULL) std::cout << TTF_GetError() << std::endl;
     return italic;
 }
 
 TTF_Font* Font::getBold() {
-    if(bold == NULL) cout << TTF_GetError() << endl;
+    if(bold == NULL) std::cout << TTF_GetError() << std::endl;
     return bold;
 }

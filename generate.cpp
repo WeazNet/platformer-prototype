@@ -20,7 +20,7 @@ Generate::~Generate() {
     deleteAll(draw);
 }
 
-string Generate::GenerationTmp(string filename) {
+std::string Generate::GenerationTmp(std::string filename) {
     filename += "-tmp.map";
     draw->removeFile(filename.c_str());
     distance=height;
@@ -52,17 +52,17 @@ string Generate::GenerationTmp(string filename) {
     return filename;
 }
 
-void Generate::Generation(string filename) {
-    string tmp = GenerationTmp(filename);
+void Generate::Generation(std::string filename) {
+    std::string tmp = GenerationTmp(filename);
     filename += ".map";
-    ifstream file(tmp);
-    string str;
-    vector<string> lines;
+    std::ifstream file(tmp);
+    std::string str;
+    std::vector<std::string> lines;
     while(getline(file, str)) {
-       str.erase(remove(str.begin(), str.end(), ' '), str.end()); 
+       str.erase(std::remove(str.begin(), str.end(), ' '), str.end()); 
        lines.push_back(str);
     }
-    vector<char> heights;
+    std::vector<char> heights;
     int i = 0;
     while(i < height+heightAirAdded) {
         for(int j=0; j<(int)lines.size(); j++) {
@@ -70,7 +70,7 @@ void Generate::Generation(string filename) {
         }
         i++;
     }
-    reverse(heights.begin(), heights.end());
+    std::reverse(heights.begin(), heights.end());
 
     draw->removeFile(filename.c_str());
     draw->initFileConfig(filename, heights, width, height+heightAirAdded);

@@ -1,26 +1,33 @@
 #include "debugInterface.h"
 
 DebugInterface::DebugInterface(SDL_Renderer* &r) {
-    if(!activated)return;
     ren=r;
+    draw = new Draw(ren);
+    if(!activated)return;
     setImage("res/debugInterface.png", ren);
     setSrc(0, 0, 25, 25);
     setDest(0, 0, 25, 25);
 }
 
 DebugInterface::~DebugInterface() {
+    deleteAll(draw);
 }
 
-void DebugInterface::render(Draw* &draw) {
+void DebugInterface::render() {
     if(!activated)return;
-    tuple<int, int, int> currentOrigin = {0, 0, 0};
+    std::tuple<int, int, int> origin = {0, 0, 0};
     draw->initObject(*this);
-    currentOrigin = draw->initText("Debug Interface", 10, 10, 0, 0, 255, 255, font.getBold(), currentOrigin, *this, 20);
-    currentOrigin = draw->initText(("FPS: " + to_string(Debug::fps)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
-    currentOrigin = draw->initText(("Frame number charged: " + to_string(Debug::frameCount)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
-    currentOrigin = draw->initText(("Collision number: " + to_string(Debug::colliders.size())).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
-    currentOrigin = draw->initText(("Mouse pos x: " + to_string(Debug::mouseX)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
-    currentOrigin = draw->initText(("Mouse pos y: " + to_string(Debug::mouseY)).c_str(), 10, 10, 255, 255, 255, 255, font.getItalic(), currentOrigin, *this, 20);
+    origin=addElement(origin, "Debug Interface", "", font.getBold());
+    origin=addElement(origin, "FPS:", std::to_string(Debug::fps));
+    origin=addElement(origin, "Frame number charged:", std::to_string(Debug::frameCount));
+    origin=addElement(origin, "Collision number:", std::to_string(Debug::colliders.size()));
+    origin=addElement(origin, "Mouse pos x:", std::to_string(Debug::mouseX));
+    origin=addElement(origin, "Mouse pos y:", std::to_string(Debug::mouseY));
+}
+
+tuple<int,int,int> DebugInterface::addElement(std::tuple<int,int,int>origin, std::string label, std::string value, TTF_Font* f) {
+    if(f == NULL) f=font.getItalic();
+    return draw->initText((label+" "+value).c_str(), 10, 10, 0, 0, 0, 255, f, origin, *this, 20);
 }
 
 void DebugInterface::showCollidersBox() {

@@ -6,9 +6,9 @@ Draw::Draw(SDL_Renderer* &r) {
 Draw::~Draw() {
 }
 
-tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin) {
+std::tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, std::tuple<int,int,int>origin) {
     int originX, originY, rectW;
-    tie(originX, originY, rectW) = origin;
+    std::tie(originX, originY, rectW) = origin;
     SDL_Color color;
     color.r=r; color.g=g; color.b=b; color.a=a;
     SDL_Surface* surf;
@@ -26,9 +26,9 @@ tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g
     return {rect.x, rect.y+rect.h, rect.w};
 }
 
-tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, tuple<int,int,int>origin, Object &parentClass, int spacing) {
+std::tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, std::tuple<int,int,int>origin, Object &parentClass, int spacing) {
     int posX, posY, w;
-    tie(posX,posY,w) = initText(text, x, y, r, g, b, a, font, origin);
+    std::tie(posX,posY,w) = initText(text, x, y, r, g, b, a, font, origin);
     if(parentClass.getDW() < posX+w+spacing && parentClass.getDH() < posY+spacing) {
         parentClass.setDest(parentClass.getDX(), parentClass.getDY(),  posX+w+spacing, posY+spacing);
     }
@@ -38,7 +38,7 @@ tuple<int, int, int> Draw::initText(const char* text, int x, int y, int r, int g
     else if(parentClass.getDH() < posY+spacing) {
         parentClass.setDest(parentClass.getDX(), parentClass.getDY(),  parentClass.getDW(), posY+spacing);
     }
-    return tuple<int, int, int>(posX,posY,w);
+    return std::tuple<int, int, int>(posX,posY,w);
 }
 
 void Draw::initObject(Object &o) {
@@ -53,16 +53,16 @@ void Draw::initObject(Object &o, Object const &parentClass, int spacing) {
     initObject(o);
 }
 
-void Draw::initFileConfig(string filename, vector<char>heights, int w, int h, int x, int y) {
-    ofstream file {filename, ios::app};
+void Draw::initFileConfig(std::string filename, std::vector<char>heights, int w, int h, int x, int y) {
+    std::ofstream file {filename, std::ios::app};
     file << x << " " << y << '\n' << w << " " << h << '\n';
     for(auto height : heights) {
         file << height << " ";
     }
 }
 
-void Draw::initFile(Tile &o, string filename) {
-    ofstream file {filename, ios::app};
+void Draw::initFile(Tile &o, std::string filename) {
+    std::ofstream file {filename, std::ios::app};
         file << o.getType() << " ";     
 }
 
@@ -73,7 +73,10 @@ void Draw::removeFile(const char* filename) {
     }
 }
 
-void Draw::initFileSpace(string filename) {
-    ofstream file{filename, ios::app};
+void Draw::removeFileRect(std::string filename, int widthFile, SDL_Rect &rect) {
+}
+
+void Draw::initFileSpace(std::string filename) {
+    std::ofstream file{filename, std::ios::app};
     file << '\n';
 }

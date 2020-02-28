@@ -2,12 +2,10 @@
 #define MAP_H
 
 #include <fstream>
-#include <map>
 #include <vector>
 #include <SDL2/SDL.h>
 
 #include "tile.h"
-#include "player.h"
 #include "draw.h"
 
 #include "define.h"
@@ -15,12 +13,18 @@
 class Map{
 private:
     SDL_Renderer* ren;
-    vector<Object> map;
+    static std::vector<Tile> map;
+    static std::string name;
+    static int width;
 public:
     Map(SDL_Renderer* &r);
     ~Map();
-    void load(string tileset, const char* filename, int size);
-    vector<Object> getMap() {return map;}
+    void load(std::string tileset, const char* filename);
+    static std::vector<Tile> getMap() {return map;}
+    static void hydrate(Tile &t);
+    static std::vector<Tile> getMapNearby(SDL_Rect player);
+    static std::string getName() {return name;}
+    static int getWidth() {return width;}
     void draw();
     void scroll(int x, int y);
 };

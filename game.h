@@ -8,6 +8,7 @@
 #include "map.h"
 #include "player.h"
 #include "collisions.h"
+#include "camera.h"
 #include "debug/debug.h"
 #include "debug/debugInterface.h"
 #include "generate.h"
@@ -20,10 +21,11 @@ private:
     SDL_Rect rect;
     bool running;
     int mouseX, mouseY;
-    Collisions collisions;
+    Camera *camera;
     Font font;
     DebugInterface *debugInterface;
-    Map *map;
+    Map* map;
+    Collisions collisions;
     Draw *draw;
     Player *player;
 public:

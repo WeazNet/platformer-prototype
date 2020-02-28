@@ -17,7 +17,9 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
     debugInterface = new DebugInterface(ren);
 
     map = new Map(ren);
-    map->load("res/tileset.png", "world.map", TILE_SIZE);
+    map->load("res/tileset.png", "world.map");
+
+    camera = new Camera(ren);
 
     player = new Player(ren);
 
@@ -28,6 +30,7 @@ Game::~Game() {
     deleteAll(draw);
     deleteAll(debugInterface);
     deleteAll(map);
+    deleteAll(camera);
     deleteAll(player);
     
     IMG_Quit();
@@ -44,7 +47,7 @@ void Game::loop() {
         frameStart = SDL_GetTicks();
         if(frameStart >= (frameTime+1000)) {
             frameTime=frameStart;
-            Debug::clearFrameCount();
+            if(Debug::isActive()) Debug::clearFrameCount();
         }
         input();
         update();
@@ -53,7 +56,7 @@ void Game::loop() {
         if((1000/60) > frameTime) {
             SDL_Delay((1000/60)-frameTime);
         }
-        Debug::hydrateFPS(1000/frameTime);
+        if(Debug::isActive()) Debug::hydrateFPS(1000/frameTime);
     }
 }
 
@@ -65,9 +68,8 @@ void Game::render() {
     draw->initObject(*player);
     if(Debug::isActive()) Debug::addColliders(collisions);
     debugInterface->showCollidersBox();
-    collisions.clearColliders();
-    debugInterface->render(draw);
-
+    player->tileInteractivity(Map::getMapNearby(player->getDest()));
+    debugInterface->render();
     SDL_RenderPresent(ren);
 }
 
@@ -80,18 +82,12 @@ void Game::input() {
 }
 
 void Game::update() {
+    collisions.clearColliders();
     player->update();
-    player->updateMouse(map->getMap());
-    /** Camera update **/
-    /* TODO: Camera Class */
-    if(player->getDX() < 200) {player->setDest(200, player->getDY()); map->scroll(player->getSpeed(), 0);}
-    if(player->getDX() > WIDTH-200) {player->setDest(WIDTH-200, player->getDY()); map->scroll(-player->getSpeed(), 0);}
-    if(player->getDY() < 200) {player->setDest(player->getDX(), 200); map->scroll(0, player->getSpeed());}
-    if(player->getDY() > HEIGHT-200) {player->setDest(player->getDX(), HEIGHT-200); map->scroll(0, -player->getSpeed());}
-    /****/
+    camera->updatePlayerPositionInMap(map, player);
     player->updateAnimation();
     collisions.addCollider(*player);
-    collisions.update(*player, map->getMap());
+    collisions.update(*player, Map::getMap());
     if(player->isFall()) {
         player->setDest(player->getDX(), player->getDY()+player->getVGrav());
     }

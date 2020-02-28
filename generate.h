@@ -26,7 +26,7 @@ private:
 public:
     Generate(SDL_Renderer* &r);
     ~Generate();
-    string GenerationTmp(string filename);
-    void Generation(string filename);
+    std::string GenerationTmp(std::string filename);
+    void Generation(std::string filename);
 };
 #endif//GENERATE_H

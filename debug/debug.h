@@ -3,12 +3,11 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
-using namespace std;
 #include "../collisions.h"
 
 class Debug {
 protected:
-    static vector<SDL_Rect> colliders;
+    static std::vector<SDL_Rect> colliders;
     static bool activated;
     static int frameCount;
     static int mouseX;

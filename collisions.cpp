@@ -18,11 +18,11 @@ bool Collisions::collision(Object &a, Object &b) {
     return false;
 }
 
-void Collisions::update(Entity &a, vector<Object> b) {
+void Collisions::update(Entity &a, std::vector<Tile> b) {
     a.setFall(1);
     a.setLockJump(1);
     for(int i=0;i<(int)b.size();i++) {
-        if(collision(a, b[i])) {
+        if(collision(a, b[i]) && b[i].getType() != NONE) {
             addCollider(b[i]);
             a.setFall(0);
             a.setLockJump(0);

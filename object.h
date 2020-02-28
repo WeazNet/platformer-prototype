@@ -11,12 +11,6 @@ enum Solid {
     BLOCK
 };
 
-enum Actions {
-    HOVERED,
-    CLICKED,
-    PRESSED
-};
-
 class Object {
 protected:
     SDL_Rect src;
@@ -39,7 +33,6 @@ public:
     int getDH() const {return dest.h;}
     bool isSolid() const {return solid;}
     void setSolid(bool s) {solid=s;}
-    void onAction(SDL_Renderer* &ren, int a = -1);
 };
 
 #endif //OBJECT_H

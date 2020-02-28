@@ -5,7 +5,6 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
-using namespace std;
 
 class Font {
 private:

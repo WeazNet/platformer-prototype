@@ -1,7 +1,7 @@
 #include "debug.h"
 
 int Debug::frameCount = 0;
-vector<SDL_Rect> Debug::colliders = {};
+std::vector<SDL_Rect> Debug::colliders = {};
 bool Debug::activated = false;
 int Debug::mouseX = 0;
 int Debug::mouseY = 0;
