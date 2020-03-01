@@ -21,12 +21,12 @@ void Tile::init(int t) {
             break;
         case GRASS:
             setHarvestLevel(HAND);
-            setDurability(80.0);
+            setDurability(20.0);
             setSolid(BLOCK);
             break;
         case DIRT:
             setHarvestLevel(HAND);
-            setDurability(80.0);
+            setDurability(20.0);
             setSolid(BLOCK);
             break;
         default:

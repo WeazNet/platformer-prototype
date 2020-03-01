@@ -4,7 +4,7 @@ Player::Player(SDL_Renderer* &r) {
     ren=r;
     draw = new Draw(ren);
     left=right=up=0;
-    setImage("res/player.png", ren);
+    setImage("resources/entity_player.png", ren);
     setDest(0, 0, 14*4, 21*4);
     setSolid(1);
     createCycle(IDOL_RIGHT, 14, 21, 2, 20);
@@ -69,7 +69,7 @@ void Player::tileInteractivity(std::vector<Tile> map) {
 void Player::onAction(Tile &t, int a) {
     SDL_Rect dest = t.getDest();
     Object o;
-    o.setImage("res/tilenotice.png", ren);
+    o.setImage("resources/tile_notice.png", ren);
     o.setDest(t.getDX(),t.getDY(), t.getDW(), t.getDH());
     switch(a) {
         case HOVERED:

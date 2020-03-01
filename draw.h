@@ -19,9 +19,8 @@ private:
 public:
     Draw(SDL_Renderer* &r);
     ~Draw();
-    std::tuple<int, int, int> initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, std::tuple<int,int,int>origin, Object &parentClass, int spacing = 0);
-    std::tuple<int, int, int> initText(const char* text, int x, int y, int r, int g, int b, int a, TTF_Font* font, std::tuple<int,int,int>origin);
-    void initObject(Object &o, Object const &parentClass, int spacing = 0);
+    SDL_Rect initText(const char* text, int r, int g, int b, int a, TTF_Font* font, SDL_Rect origin, Object &parentClass, std::string orientation, bool first, std::tuple<int,int> spacing = {0,0});
+    SDL_Rect initObject(Object &o, Object &parentClass, std::string orientation, SDL_Rect origin, int spacing = 0);
     void initObject(Object &o);
     void initFileConfig(std::string filename, std::vector<char>heights, int w, int h, int x=0, int y=0);
     void initFile(Tile &o, std::string filename);

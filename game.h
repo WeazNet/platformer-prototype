@@ -12,6 +12,7 @@
 #include "debug/debug.h"
 #include "debug/debugInterface.h"
 #include "generate.h"
+#include "inventory.h"
 #include "define.h"
 
 class Game {
@@ -28,6 +29,7 @@ private:
     Collisions collisions;
     Draw *draw;
     Player *player;
+    Inventory *inventory;
 public:
     Game(SDL_Window* &window, SDL_Renderer* &renderer);
     ~Game();

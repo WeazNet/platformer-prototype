@@ -17,11 +17,13 @@ Game::Game(SDL_Window* &window, SDL_Renderer* &renderer) {
     debugInterface = new DebugInterface(ren);
 
     map = new Map(ren);
-    map->load("res/tileset.png", "world.map");
+    map->load("resources/tile_set.png", "world.map");
 
     camera = new Camera(ren);
 
     player = new Player(ren);
+
+    inventory = new Inventory(ren);
 
     loop();
 }
@@ -32,6 +34,7 @@ Game::~Game() {
     deleteAll(map);
     deleteAll(camera);
     deleteAll(player);
+    deleteAll(inventory);
     
     IMG_Quit();
     SDL_DestroyWindow(w);
@@ -69,6 +72,7 @@ void Game::render() {
     if(Debug::isActive()) Debug::addColliders(collisions);
     debugInterface->showCollidersBox();
     player->tileInteractivity(Map::getMapNearby(player->getDest()));
+    inventory->render();
     debugInterface->render();
     SDL_RenderPresent(ren);
 }

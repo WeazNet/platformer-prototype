@@ -14,12 +14,11 @@ class DebugInterface : public Object, public Debug {
 private:
     SDL_Renderer *ren;
     Draw *draw;
-    Font font;
 public:
     DebugInterface(SDL_Renderer* &r);
     ~DebugInterface();
     void render();
-    std::tuple<int,int,int> addElement(std::tuple<int,int,int>origin, std::string label, std::string value = "", TTF_Font* f = NULL);
+    SDL_Rect addElement(SDL_Rect origin, std::string label, std::string value = "", std::string orientation = "bottom", bool first = false, TTF_Font* f = NULL);
     void showCollidersBox();
 };
 #endif//DEBUG_INTERFACE_H

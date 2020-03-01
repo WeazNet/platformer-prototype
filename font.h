@@ -8,14 +8,14 @@
 
 class Font {
 private:
-    TTF_Font* regular;
-    TTF_Font* italic;
-    TTF_Font* bold;
+    static TTF_Font* regular;
+    static TTF_Font* italic;
+    static TTF_Font* bold;
 public:
     Font();
     ~Font();
-    TTF_Font* getRegular();
-    TTF_Font* getItalic();
-    TTF_Font* getBold();
+    static TTF_Font* getRegular();
+    static TTF_Font* getItalic();
+    static TTF_Font* getBold();
 };
 #endif//FONT_H

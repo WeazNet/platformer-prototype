@@ -71,7 +71,7 @@ void Map::hydrate(Tile &t) {
 std::vector<Tile> Map::getMapNearby(SDL_Rect player) {
     std::vector<Tile> tilesNearby;
     for(int i=0;i<(int)map.size();i++) {
-        if(map[i].getDY() > player.y-(3*TILE_SIZE) && map[i].getDY() < player.y+player.h+(3*TILE_SIZE) && map[i].getDX() > player.x-(3*TILE_SIZE) && map[i].getDX() < player.x+player.w+(3*TILE_SIZE)) {
+        if(map[i].getDY() > player.y-2*TILE_SIZE && map[i].getDY() < player.y+player.h+2*TILE_SIZE && map[i].getDX() > player.x-2*TILE_SIZE && map[i].getDX() < player.x+player.w+2*TILE_SIZE) {
             tilesNearby.push_back(map[i]);
         }
     }

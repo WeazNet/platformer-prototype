@@ -1,10 +1,14 @@
 #include "font.h"
 
+TTF_Font* Font::regular = nullptr;
+TTF_Font* Font::italic = nullptr;
+TTF_Font* Font::bold = nullptr;
+
 Font::Font() {
     TTF_Init();
-    regular = TTF_OpenFont("res/SF Pixelate.ttf", FONT_SIZE_NORMAL);
-    italic = TTF_OpenFont("res/SF Pixelate Oblique.ttf", FONT_SIZE_NORMAL);
-    bold = TTF_OpenFont("res/SF Pixelate Bold.ttf", FONT_SIZE_NORMAL);
+    regular = TTF_OpenFont("resources/font_pixelate/SF Pixelate.ttf", FONT_SIZE_NORMAL);
+    italic = TTF_OpenFont("resources/font_pixelate/SF Pixelate Oblique.ttf", FONT_SIZE_NORMAL);
+    bold = TTF_OpenFont("resources/font_pixelate/SF Pixelate Bold.ttf", FONT_SIZE_NORMAL);
 }
 
 Font::~Font() {

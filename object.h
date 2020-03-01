@@ -31,6 +31,8 @@ public:
     int getDY() const {return dest.y;}
     int getDW() const {return dest.w;}
     int getDH() const {return dest.h;}
+    void setDW(int w) {dest.w=w;}
+    void setDH(int h) {dest.h=h;}
     bool isSolid() const {return solid;}
     void setSolid(bool s) {solid=s;}
 };
